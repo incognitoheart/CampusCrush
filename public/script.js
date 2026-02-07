@@ -242,7 +242,6 @@ async function startMatching() {
           <div class="spinner"></div>
           <p style="color:#667eea;font-weight:600;">Finding your match...</p>
           <p style="color: #999; font-size: 0.9em; margin-top: 10px">
-            <span id="participantCount">${participantCount}</span> people waiting 💕
           </p>
         </div>
       `;

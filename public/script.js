@@ -160,7 +160,34 @@ function sendGif(gifUrl, description) {
   addGifMessage(gifData, "sent");
   document.getElementById("gifPicker").classList.remove("active");
 }
+function updateIndiaTime() {
+  const now = new Date();
+
+  const indiaDate = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+  );
+
+  const hours = indiaDate.getHours(); // 0–23
+
+  const options = {
+    timeZone: "Asia/Kolkata",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true
+  };
+
+  const indiaTime = now.toLocaleTimeString("en-US", options);
+  document.getElementById("india-time").textContent = indiaTime;
+
+  return hours;
+}
 document.addEventListener("DOMContentLoaded", async () => {
+  const indiaHour = updateIndiaTime();
+  if (!(indiaHour >= 23 || indiaHour === 0)) {
+    window.location.href = "./index2.html";
+    return;
+  }
   await loadEmojis();
   initEmojiPicker();
   const gifSearchInput = document.getElementById("gifSearch");

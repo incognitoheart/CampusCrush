@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>💘 CampusCrush - Valentine's Week</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>💘 CampusCrush</h1>
+        <p>Anonymous Valentine's Week Chating</p>
+      </div>
+      <div class="content">
+        <div id="welcome">
+          <h2 id="status">Tell us about you</h2>
+          <p style="margin: 15px 0; font-weight: 600">You are</p>
+          <div class="gender-select">
+            <button class="gender-btn male" onclick="setGender('male')">
+              🙋‍♂️ Male
+            </button>
+            <button class="gender-btn female" onclick="setGender('female')">
+              🙋‍♀️ Female
+            </button>
+          </div>
+          <p style="margin: 20px 0 10px; font-weight: 600">
+            You want to talk to
+          </p>
+          <div class="gender-select">
+            <button class="gender-btn male" onclick="setLookingFor('male')">
+              🙋‍♂️ Male
+            </button>
+            <button class="gender-btn female" onclick="setLookingFor('female')">
+              🙋‍♀️ Female
+            </button>
+            <button class="gender-btn" onclick="setLookingFor('any')">
+              🌈 Anyone
+            </button>
+          </div>
+          <button
+            class="action-btn send-btn"
+            style="margin-top: 20px; width: 100%"
+            onclick="startMatching()"
+          >
+            Start Matching 💘
+          </button>
+          <p
+            style="
+              color: #999;
+              font-size: 0.9em;
+              margin-top: 10px;
+              text-align: center;
+            "
+          >
+            <span id="participantCount">0</span> people Online
+          </p>
+          <div class="stats">
+            <p>� Open to Everyone</p>
+            <p>✨ Completely Anonymous</p>
+            <p>💬 Real-time Matching</p>
+          </div>
+        </div>
+        <div id="searching" style="display: none">
+          <div class="loading">
+            <div class="spinner"></div>
+            <p style="color: #667eea; font-weight: 600">
+              Finding your match...
+            </p>
+          </div>
+        </div>
+        <div id="chat">
+          <div class="match-notification">
+            🎉 You're matched! Say hi to your mystery crush!
+          </div>
+          <div id="messages"></div>
+          <div class="input-wrapper">
+            <div class="emoji-categories">
+              <button
+                class="emoji-category-btn active"
+                data-category="Smileys & Emotion"
+              >
+                😊
+              </button>
+              <button class="emoji-category-btn" data-category="People & Body">
+                👋
+              </button>
+              <button class="emoji-category-btn" data-category="Activities">
+                🎉
+              </button>
+              <button class="emoji-category-btn" data-category="Food & Drink">
+                🍕
+              </button>
+              <button
+                class="emoji-category-btn"
+                data-category="Travel & Places"
+              >
+                ✈️
+              </button>
+              <button class="emoji-category-btn" data-category="Objects">
+                💡
+              </button>
+            </div>
+
+            <div id="gifPicker" class="gif-picker">
+              <input
+                type="text"
+                id="gifSearch"
+                class="gif-search"
+                placeholder="Search GIFs..."
+              />
+              <div id="gifGrid" class="gif-grid"></div>
+            </div>
+            <div class="input-group">
+              <div class="emoji-gif-buttons">
+                <button
+                  class="emoji-btn"
+                  onclick="toggleEmojiPicker()"
+                  title="Add emoji"
+                >
+                  😊
+                </button>
+                <button
+                  class="gif-btn"
+                  onclick="toggleGifPicker()"
+                  title="Add GIF"
+                >
+                  GIF
+                </button>
+              </div>
+              <input
+                id="msg"
+                placeholder="Type your message..."
+                onkeypress="handleKeyPress(event)"
+              />
+              <button class="action-btn send-btn" onclick="sendMessage()">
+                Send 💌
+              </button>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="action-btn skip-btn" onclick="skipPartner()">
+              Next Match ⏭️
+            </button>
+          </div>
+          <div class="emoji-hint">💡 Tip: Be respectful and have fun!</div>
+        </div>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

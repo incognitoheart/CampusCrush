@@ -177,17 +177,16 @@ function updateIndiaTime() {
     hour12: true
   };
 
-  const indiaTime = now.toLocaleTimeString("en-US", options);
-  document.getElementById("india-time").textContent = indiaTime;
-
   return hours;
 }
 document.addEventListener("DOMContentLoaded", async () => {
   const indiaHour = updateIndiaTime();
+  console.log(indiaHour);
   if (!(indiaHour >= 23 || indiaHour === 0)) {
-    window.location.href = "./index2.html";
+    window.location.href = "https://campuscrush-bvws.onrender.com/index2.html";
     return;
   }
+  document.body.style.display = "flex";
   await loadEmojis();
   initEmojiPicker();
   const gifSearchInput = document.getElementById("gifSearch");

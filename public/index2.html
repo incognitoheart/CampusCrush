@@ -1,11 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waiting</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waiting</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px 40px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .time {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+
+    .countdown {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .label {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Wait for time to cum</h1>
+  <div class="container">
+    <h1>Waiting for the Time</h1>
+    <div class="time" id="currentTime">--:--:--</div>
+    <div class="countdown" id="countdown">--:--:--</div>
+    <div class="label">Time left until 11:00 PM (IST)</div>
+  </div>
+
+  <script>
+    function getIndiaDate() {
+      return new Date(
+        new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+      );
+    }
+
+    function updateCountdown() {
+      const now = getIndiaDate();
+
+      const target = new Date(now);
+      target.setHours(23, 0, 0, 0);
+
+      if (now >= target) {
+        document.getElementById("countdown").textContent = "00:00:00";
+        return;
+      }
+
+      const diff = target - now;
+
+      const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
+      const minutes = String(
+        Math.floor((diff / (1000 * 60)) % 60)
+      ).padStart(2, "0");
+      const seconds = String(
+        Math.floor((diff / 1000) % 60)
+      ).padStart(2, "0");
+
+      document.getElementById("countdown").textContent =
+        `${hours}:${minutes}:${seconds}`;
+
+      document.getElementById("currentTime").textContent =
+        now.toLocaleTimeString("en-IN", { hour12: true });
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>

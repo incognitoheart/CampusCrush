@@ -207,10 +207,13 @@ body {
 .input-group {
   display: flex;
   gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 #msg {
   flex: 1;
+  min-width: 0; /* Important for flex items */
   padding: 14px 18px;
   border: 2px solid #e0e0e0;
   border-radius: 25px;
@@ -238,6 +241,8 @@ body {
 .send-btn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  flex-shrink: 0; /* Prevent button from shrinking */
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 .send-btn:hover {
@@ -297,6 +302,7 @@ body {
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .emoji-btn,
@@ -346,6 +352,10 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.emoji-categories {
+  display: none;
 }
 
 .emoji-categories {

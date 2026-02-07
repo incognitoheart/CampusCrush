@@ -26,29 +26,56 @@ function highlightSelection(button) {
   });
   button.style.opacity = "1";
 }
-let currentEmojiCategory = "smileys";
+let currentEmojiCategory = "Smileys & Emotion"; // Change from "smileys" to "Smileys & Emotion"
 let gifSearchTimeout = null;
+function mapCategoryName(displayName) {
+  const categoryMap = {
+    "Smileys & Emotion": "Smileys & Emotion",
+    "People & Body": "People & Body",
+    "Activities": "Activities",
+    "Food & Drink": "Food & Drink",
+    "Travel & Places": "Travel & Places",
+    "Objects": "Objects"
+  };
+  return categoryMap[displayName] || "Smileys & Emotion";
+}
 function initEmojiPicker() {
+  const categoryBtns = document.querySelectorAll(".emoji-category-btn");
+  categoryBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      categoryBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const category = btn.getAttribute("data-category");
+      currentEmojiCategory = mapCategoryName(category);
+      renderEmojis();
+    });
+  });
   renderEmojis();
 }
 function renderEmojis() {
   const grid = document.getElementById("emojiGrid");
+  if (!grid) return;
+  
   grid.innerHTML = "";
 
-  emojiList
-    .filter(e => e.category === currentEmojiCategory && e.unified)
-    .slice(0, 300)
-    .forEach(e => {
-      const emoji = String.fromCodePoint(
-        ...e.unified.split("-").map(u => parseInt(u, 16))
-      );
-      const item = document.createElement("div");
-      item.className = "emoji-item";
-      item.textContent = emoji;
-      item.onclick = () => insertEmoji(emoji);
+  const filtered = emojiList.filter(e => e.category === currentEmojiCategory && e.unified);
+  
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="padding:20px;text-align:center;color:#999;">No emojis found</div>';
+    return;
+  }
 
-      grid.appendChild(item);
-    });
+  filtered.slice(0, 64).forEach(e => {
+    const emoji = String.fromCodePoint(
+      ...e.unified.split("-").map(u => parseInt(u, 16))
+    );
+    const item = document.createElement("div");
+    item.className = "emoji-item";
+    item.textContent = emoji;
+    item.onclick = () => insertEmoji(emoji);
+
+    grid.appendChild(item);
+  });
 }
 function toggleEmojiPicker() {
   const emojiPicker = document.getElementById("emojiPicker");

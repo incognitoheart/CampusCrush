@@ -149,6 +149,15 @@ function displayGifs(gifs) {
     grid.appendChild(item);
   });
 }
+function playBeep() {
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioCtx.createOscillator();
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+  oscillator.connect(audioCtx.destination);
+  oscillator.start();
+  oscillator.stop(audioCtx.currentTime + 0.2);
+}
 function sendGif(gifUrl, description) {
   if (!chatActive || !socket) return;
   const gifData = {
@@ -162,27 +171,15 @@ function sendGif(gifUrl, description) {
 }
 function updateIndiaTime() {
   const now = new Date();
-
   const indiaDate = new Date(
     now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
   );
-
-  const hours = indiaDate.getHours(); // 0–23
-
-  const options = {
-    timeZone: "Asia/Kolkata",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: true
-  };
-
+  const hours = indiaDate.getHours();
   return hours;
 }
 document.addEventListener("DOMContentLoaded", async () => {
   const indiaHour = updateIndiaTime();
-  console.log(indiaHour);
-  if (!(indiaHour >= 23 || indiaHour === 0)) {
+  if (!(indiaHour >= 12 || indiaHour === 23)) {
     window.location.href = "https://campuscrush-bvws.onrender.com/index2.html";
     return;
   }
@@ -250,6 +247,7 @@ async function startMatching() {
       document.getElementById("participantCount").textContent = participantCount;
     });
     socket.on("matched", () => {
+      playBeep();
       chatActive = true;
       document.getElementById("searching").style.display = "none";
       document.getElementById("chat").style.display = "block";

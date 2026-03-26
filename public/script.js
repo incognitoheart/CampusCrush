@@ -202,6 +202,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function startMatching() {
   if (joined) return;
 
+  const genderSelect = document.getElementById("gender");
+  const lookingForSelect = document.getElementById("lookingFor");
+  const gender = genderSelect?.value || "anonymous";
+  const lookingFor = lookingForSelect?.value || "any";
+
   joined = true;
   document.getElementById("welcome").style.display = "none";
   document.getElementById("searching").style.display = "block";
@@ -209,8 +214,8 @@ async function startMatching() {
   try {
     socket = io();
     socket.emit("join", {
-      gender: "anonymous",
-      lookingFor: "any",
+      gender,
+      lookingFor,
     });
 
     socket.on("waiting", ({ participantCount }) => {

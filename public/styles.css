@@ -82,6 +82,33 @@ body {
   margin-bottom: 14px;
 }
 
+.match-preferences {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.match-preferences label {
+  font-size: 0.88rem;
+  color: #334155;
+  font-weight: 600;
+}
+
+.match-preferences select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.93rem;
+  background: #fff;
+  color: var(--text);
+}
+
+.match-preferences select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
 .panel {
   border: 1px solid var(--border);
   border-radius: 14px;
